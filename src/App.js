@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './css/side-menu.css';
 import './css/pure-min.css';
 import $ from 'jquery';
-import InputCustomizado from './componentes/InputCustomizado.js'
+import InputCustomizado from './componentes/InputCustomizado.js';
+import BotaoCustomizado from './componentes/BotaoCustomizado.js'
 
 class App extends Component {
 
@@ -46,8 +47,10 @@ class App extends Component {
       data: JSON.stringify({nome : this.state.nome, email : this.state.email, senha : this.state.senha}),
       success: function(resposta)
       {
+        console.log('Enviando Autor.');
+        console.log('RESPOSTA: ' + resposta);
         this.setState({lista : resposta});
-      },
+      }.bind(this),
       error: (erro => console.log(erro))
     })
   }
@@ -95,17 +98,14 @@ class App extends Component {
             </div>
             <div className="content" id="content">
               <div className="pure-form pure-form-aligned">
-                <form className="pure-form pure-form-aligned">
+                <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm}>
 
                   <InputCustomizado id="nome" label="Nome" type="text" value={this.state.nome} onChange={this.setNome}/>                  
                   <InputCustomizado id="email" label="Email" type="email" value={this.state.email} onChange={this.setEmail}/>
-                  <InputCustomizado id="senha" label="Senha" type="secret" value={this.state.senha} onChange={this.setSenha}/>
+                  <InputCustomizado id="senha" label="Senha" type="password" value={this.state.senha} onChange={this.setSenha}/>
 
-
-                  <div className="pure-control-group">                                  
-                    <label></label> 
-                    <button type="submit" className="pure-button pure-button-primary" onSubmit={this.enviaForm}>Gravar</button>
-                  </div>
+                  <BotaoCustomizado type="submit" label="Gravar"/>
+                    
                 </form>             
 
               </div>  
